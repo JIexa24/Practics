@@ -16,4 +16,5 @@ COMPILE:./obj/main.o ./obj/functions.o
 
 clean:
 	rm -f ./obj/*.o
+	rm -f ./bin/matrix
 
