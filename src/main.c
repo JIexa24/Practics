@@ -1,9 +1,5 @@
 #include "../include/functions.h"
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-
 int getrand(int32_t min, int32_t max)
 {
   return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;

@@ -1,7 +1,9 @@
 #ifndef FUNC_H
 #define FUNC_H
 
-
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 #include <sys/time.h>
 #include <inttypes.h>
 /*---------------------------------------------------------------------------*/
