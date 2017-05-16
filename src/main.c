@@ -22,7 +22,7 @@ int main(int argc, char** argv)
   int32_t min = -5;
   int32_t max = 5;
   for (i = 0; ; i++) {
-    if ((size > myPow(2,i)) & (size < myPow(2, i + 1))) {
+    if ((size > myPow(2,i)) & (size <= myPow(2, i + 1))) {
       realSize = myPow(2, i + 1);
       break;
     }
