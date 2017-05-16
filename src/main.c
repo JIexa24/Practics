@@ -9,18 +9,19 @@ int main(int argc, char** argv)
 {
   assert(!(argc < 2));
 
-  int i, j;
-  int32_t** matrixOne = NULL;
-  int32_t** matrixTwo = NULL;
+  int i                  = 0;
+  int j                  = 0;
+  int32_t** matrixOne    = NULL;
+  int32_t** matrixTwo    = NULL;
   int32_t** matrixRezult = NULL;
-  int32_t* one = NULL;
-  int32_t* two = NULL;
-  int32_t* rezult = NULL;
+  int32_t* one           = NULL;
+  int32_t* two           = NULL;
+  int32_t* rezult        = NULL;
+  int size               = atoi(argv[1]);
+  int realSize           = 0;
+  int32_t min            = -5;
+  int32_t max            = 5;
 
-  int size = atoi(argv[1]);
-  int realSize = 0;
-  int32_t min = -5;
-  int32_t max = 5;
   for (i = 0; ; i++) {
     if ((size > myPow(2,i)) & (size <= myPow(2, i + 1))) {
       realSize = myPow(2, i + 1);
