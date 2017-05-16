@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   }
 
   double time = wtime();
-  simpleMatrixProizv(matrixOne, matrixTwo, matrixRezult, realSize);
+  simpleMatrixProizv(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
   printf("simpleMatrixProizv\t%.6lf\n" , time);
 
@@ -68,7 +68,7 @@ int main(int argc, char** argv)
   }
 
   time = wtime();
-  simpleMatrixProizvAsm(matrixOne, matrixTwo, matrixRezult, realSize);
+  simpleMatrixProizvAsm(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
   printf("simpleMatrixProizvAsm\t%.6lf\n" , time);
 
@@ -79,11 +79,17 @@ int main(int argc, char** argv)
   }
 
   time = wtime();
-  simpleMatrixProizvCache(matrixOne, matrixTwo, matrixRezult, realSize);
+  simpleMatrixProizvCache(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
 
   printf("simpleMatrixProizvCache\t%.6lf\n" , time);
 
+  for(i = 0; i < realSize; i++){
+    free(matrixOne[i]);
+    free(matrixTwo[i]);
+  }
+  free(matrixOne);
+  free(matrixTwo);
   for (i = 0; i < realSize; i++) {
     free(matrixRezult[i]);
   }
@@ -111,12 +117,6 @@ int main(int argc, char** argv)
       }
     }
   }
-  for(i=0;i < realSize; i++){
-    free(matrixOne[i]);
-    free(matrixTwo[i]);
-  }
-  free(matrixOne);
-  free(matrixTwo);
 
   for (i = 0; i < realSize; i++) {
     for (j = 0; j < realSize; j++) {
