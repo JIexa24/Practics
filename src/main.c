@@ -18,16 +18,10 @@ int main(int argc, char** argv)
   int32_t* two           = NULL;
   int32_t* rezult        = NULL;
   int size               = atoi(argv[1]);
-  int realSize           = 0;
+  int realSize           = size;
   int32_t min            = -5;
   int32_t max            = 5;
 
-  for (i = 0; ; i++) {
-    if ((size > myPow(2,i)) & (size <= myPow(2, i + 1))) {
-      realSize = myPow(2, i + 1);
-      break;
-    }
-  }
   matrixOne = (int32_t**)malloc(sizeof(int32_t*) * realSize);
   for (i = 0; i < realSize; i++) {
     matrixOne[i] = (int32_t*)malloc(sizeof(int32_t) * realSize);
@@ -90,11 +84,19 @@ int main(int argc, char** argv)
   }
   free(matrixOne);
   free(matrixTwo);
+
   for (i = 0; i < realSize; i++) {
     free(matrixRezult[i]);
   }
-
   free(matrixRezult);
+
+  for (i = 0; ; i++) {
+    if ((size > myPow(2,i)) & (size <= myPow(2, i + 1))) {
+      realSize = myPow(2, i + 1);
+      break;
+    }
+  }
+
   one = (int32_t*)malloc(sizeof(int32_t) * realSize * realSize);
   two = (int32_t*)malloc(sizeof(int32_t) * realSize * realSize);
   rezult = (int32_t*)malloc(sizeof(int32_t) * realSize * realSize);
@@ -108,6 +110,7 @@ int main(int argc, char** argv)
       }
     }
   }
+  
   for (i = 0; i < realSize; i++) {
     for (j = 0; j < realSize; j++) {
       if ((i >= size) | (j >= size)) {
