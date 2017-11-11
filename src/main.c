@@ -1,5 +1,6 @@
 #include "../include/functions.h"
 int threadnum = 7;
+int threadn;
 int getrand(int32_t min, int32_t max)
 {
   return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
@@ -127,9 +128,9 @@ int main(int argc, char** argv)
     }
   }
   threadnum = 0;
-  int threadnumst;
+  threadn = 0;
   threadnum = argc > 2 ? atoi(argv[2]) : 4;
-  dat datat = {rezult,one, two,realSize,realSize, &threadnumst};
+  dat datat = {rezult,one, two,realSize,realSize};
   time = wtime();
    simpleMatrixProizvCacheObliviousp(&datat);
 //  simpleMatrixProizvCacheOblivious(rezult, one, two, realSize, realSize);
