@@ -89,7 +89,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
     const int ind12 = tsize;
     const int ind21 = (tsize) * rowsize;
     const int ind22 = (tsize) * (rowsize + 1);
-    pthread_t tid[7];
+    pthread_t tid[8];
     int* args[8][5] = {
 {C + ind11, A + ind11, B + ind11, &tsize, &rowsize},//
 {C + ind11, A + ind12, B + ind21, &tsize, &rowsize},//
@@ -156,7 +156,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
 
     // C22 += A22 * B22
     if (threadnum < threadnumst){
-    pthread_create(&tid[6],NULL,simpleMatrixProizvCacheObliviousp,&args[7]);
+    pthread_create(&tid[7],NULL,simpleMatrixProizvCacheObliviousp,&args[7]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind22, A + ind22, B + ind22,  &tsize, &rowsize);
