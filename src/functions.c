@@ -110,3 +110,61 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
     simpleMatrixProizvCacheOblivious(C + ind22, A + ind22, B + ind22, size / 2, rowsize);
   }
 }
+/*----------------------------------------------------------------------------*/
+void simpleMatrixProizvCacheObliviousp(void* ptr)
+{
+  dat * p = (dat *)(ptr);
+  if (p->size == 2)
+  {
+    const int ind11 = 0;
+    const int ind12 = 1;
+    const int ind21 = p->rowsize;
+    const int ind22 = p->rowsize + 1;
+
+    p->C[ind11] += p->A[ind11] * p->B[ind11] + p->A[ind12] * p->B[ind21];
+    p->C[ind12] += p->A[ind11] * p->B[ind12] + p->A[ind12] * p->B[ind22];
+    p->C[ind21] += p->A[ind21] * p->B[ind11] + p->A[ind22] * p->B[ind21];
+    p->C[ind22] += p->A[ind21] * p->B[ind12] + p->A[ind22] * p->B[ind22];
+  } else {
+    const int ind11 = 0;
+    const int ind12 = p->size / 2;
+    const int ind21 = (p->size / 2) * p->rowsize;
+    const int ind22 = (p->size / 2) * (p->rowsize + 1);
+    pthread_t tid[8];
+    dat argum[8] = {
+{p->C + ind11, p->A + ind11, p->B + ind11, p->size, p->rowsize, p->thr},//
+{p->C + ind11, p->A + ind12, p->B + ind21, p->size, p->rowsize, p->thr},//
+{p->C + ind12, p->A + ind11, p->B + ind12, p->size, p->rowsize, p->thr},//
+{p->C + ind12, p->A + ind12, p->B + ind22, p->size, p->rowsize, p->thr},//
+{p->C + ind21, p->A + ind21, p->B + ind11, p->size, p->rowsize, p->thr},//
+{p->C + ind21, p->A + ind22, p->B + ind21, p->size, p->rowsize, p->thr},
+{p->C + ind22, p->A + ind21, p->B + ind12, p->size, p->rowsize, p->thr},
+{p->C + ind22, p->A + ind22, p->B + ind22,  p->size, p->rowsize, p->thr}
+};
+    // C11 += A11 * B11
+    if (p->thr[0] <= threadnum && p->thr[0] >= 0){
+    p->thr[0]++;
+    int pr = pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp,&argum[0]);
+    printf("thread %d %d!\n",p->thr[0],threadnum);
+    } else
+    simpleMatrixProizvCacheObliviousp(&argum[0]);
+    // C11 += A12 * B21
+    simpleMatrixProizvCacheObliviousp(&argum[1]);
+
+    // C12 += A11 * B12
+    simpleMatrixProizvCacheObliviousp(&argum[2]);
+    // C12 += A12 * B22
+    simpleMatrixProizvCacheObliviousp(&argum[3]);
+
+    // C21 += A21 * B11
+    simpleMatrixProizvCacheObliviousp(&argum[4]);
+    // C21 += A22 * B21
+    simpleMatrixProizvCacheObliviousp(&argum[5]);
+
+    // C22 += A21 * B12
+    simpleMatrixProizvCacheObliviousp(&argum[6]);
+    // C22 += A22 * B22
+    simpleMatrixProizvCacheObliviousp(&argum[7]);
+  }
+  p->thr[0]--;
+}

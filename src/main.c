@@ -1,5 +1,4 @@
 #include "../include/functions.h"
-int threadnumst = 0;
 int threadnum = 7;
 int getrand(int32_t min, int32_t max)
 {
@@ -111,7 +110,7 @@ int main(int argc, char** argv)
       }
     }
   }
-  
+
   for (i = 0; i < realSize; i++) {
     for (j = 0; j < realSize; j++) {
       if ((i >= size) | (j >= size)) {
@@ -128,10 +127,12 @@ int main(int argc, char** argv)
     }
   }
   threadnum = 0;
-  threadnumst = argc > 2 ? atoi(argv[2]) : 4;
-
+  int threadnumst;
+  threadnum = argc > 2 ? atoi(argv[2]) : 4;
+  dat datat = {rezult,one, two,realSize,realSize, &threadnumst};
   time = wtime();
-  simpleMatrixProizvCacheOblivious(rezult, one, two, realSize, realSize);
+   simpleMatrixProizvCacheObliviousp(&datat);
+//  simpleMatrixProizvCacheOblivious(rezult, one, two, realSize, realSize);
   time = wtime() - time;
   printf("simpleMatrixProizvCacheOblivious\t%.6lf \n" , time);
 

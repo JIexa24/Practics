@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -masm=intel
+CFLAGS = -masm=intel -pthread
 
 .PHONY: all COMPILE
 
@@ -17,4 +17,3 @@ COMPILE:./obj/main.o ./obj/functions.o
 clean:
 	rm -f ./obj/*.o
 	rm -f ./bin/matrix
-
