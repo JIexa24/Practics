@@ -70,9 +70,9 @@ void simpleMatrixProizvCache(int32_t** first, int32_t** second,
 }
 /*---------------------------------------------------------------------------*/
 typedef struct threaddata {
-  int32_t *C,
-  int32_t *A,
-  int32_t *B,
+  int *C,
+  int *A,
+  int *B,
   int size,
   int rowsize
 } dat;
@@ -155,7 +155,8 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
 
     // C22 += A21 * B12
     if (threadnum < threadnumst){
-    pthread_create(&tid[6],NULL,simpleMatrixProizvCacheObliviousp,args[6]);
+    pthread_create(&tid[6],NULL,simpleMatrixPr    simpleMatrixProizvCacheObliviousp(C + ind11, A + ind11, B + ind11, &tsize, &rowsize);
+oizvCacheObliviousp,args[6]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp({C + ind22, A + ind21, B + ind12,  tsize, rowsize});
