@@ -3,6 +3,9 @@
 extern int threadnum;
 extern int threadnumst;
 
+pthread_mutex_t incmutex = PTHREAD_MUTEX_INITIALIZER;
+pthread_mutex_t decmutex = PTHREAD_MUTEX_INITIALIZER;
+
 int myPow(int a, int b)
 {
   int tmp = a;
@@ -111,9 +114,13 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
   }
 }
 /*----------------------------------------------------------------------------*/
-void simpleMatrixProizvCacheObliviousp(void* ptr)
+void * simpleMatrixProizvCacheObliviousp(void* ptr)
 {
   dat * p = (dat *)(ptr);
+//  printf("%d\n", p->size); 
+  pthread_mutex_lock(&incmutex);
+  p->thr[0]++;
+  pthread_mutex_unlock(&incmutex);
   if (p->size == 2)
   {
     const int ind11 = 0;
@@ -126,27 +133,28 @@ void simpleMatrixProizvCacheObliviousp(void* ptr)
     p->C[ind21] += p->A[ind21] * p->B[ind11] + p->A[ind22] * p->B[ind21];
     p->C[ind22] += p->A[ind21] * p->B[ind12] + p->A[ind22] * p->B[ind22];
   } else {
+    int tsize = p->size/2;
     const int ind11 = 0;
-    const int ind12 = p->size / 2;
-    const int ind21 = (p->size / 2) * p->rowsize;
-    const int ind22 = (p->size / 2) * (p->rowsize + 1);
+    const int ind12 = tsize;
+    const int ind21 = tsize * p->rowsize;
+    const int ind22 = tsize * (p->rowsize + 1);
     pthread_t tid[8];
     dat argum[8] = {
-{p->C + ind11, p->A + ind11, p->B + ind11, p->size, p->rowsize, p->thr},//
-{p->C + ind11, p->A + ind12, p->B + ind21, p->size, p->rowsize, p->thr},//
-{p->C + ind12, p->A + ind11, p->B + ind12, p->size, p->rowsize, p->thr},//
-{p->C + ind12, p->A + ind12, p->B + ind22, p->size, p->rowsize, p->thr},//
-{p->C + ind21, p->A + ind21, p->B + ind11, p->size, p->rowsize, p->thr},//
-{p->C + ind21, p->A + ind22, p->B + ind21, p->size, p->rowsize, p->thr},
-{p->C + ind22, p->A + ind21, p->B + ind12, p->size, p->rowsize, p->thr},
-{p->C + ind22, p->A + ind22, p->B + ind22,  p->size, p->rowsize, p->thr}
+{p->C + ind11, p->A + ind11, p->B + ind11, tsize, p->rowsize, p->thr},//
+{p->C + ind11, p->A + ind12, p->B + ind21, tsize, p->rowsize, p->thr},//
+{p->C + ind12, p->A + ind11, p->B + ind12, tsize, p->rowsize, p->thr},//
+{p->C + ind12, p->A + ind12, p->B + ind22, tsize, p->rowsize, p->thr},//
+{p->C + ind21, p->A + ind21, p->B + ind11, tsize, p->rowsize, p->thr},//
+{p->C + ind21, p->A + ind22, p->B + ind21, tsize, p->rowsize, p->thr},
+{p->C + ind22, p->A + ind21, p->B + ind12, tsize, p->rowsize, p->thr},
+{p->C + ind22, p->A + ind22, p->B + ind22, tsize, p->rowsize, p->thr}
 };
+
     // C11 += A11 * B11
-    if (p->thr[0] <= threadnum && p->thr[0] >= 0){
-    p->thr[0]++;
-    int pr = pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp,&argum[0]);
-    printf("thread %d %d!\n",p->thr[0],threadnum);
-    } else
+//  if (p->thr[0] <= threadnum && p->thr[0] >= 0){
+    pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp, &argum[0]);
+//    printf("thread %d %d!\n",p->thr[0],threadnum);
+//} else
     simpleMatrixProizvCacheObliviousp(&argum[0]);
     // C11 += A12 * B21
     simpleMatrixProizvCacheObliviousp(&argum[1]);
@@ -165,6 +173,9 @@ void simpleMatrixProizvCacheObliviousp(void* ptr)
     simpleMatrixProizvCacheObliviousp(&argum[6]);
     // C22 += A22 * B22
     simpleMatrixProizvCacheObliviousp(&argum[7]);
+ // }
+//  p->thr[0]--;
+   pthread_join(tid[0],NULL);
   }
-  p->thr[0]--;
+  return NULL;
 }
