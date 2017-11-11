@@ -1,5 +1,6 @@
 #include "../include/functions.h"
-
+int threadnumst = 0;
+int threadnum = 7;
 int getrand(int32_t min, int32_t max)
 {
   return (double)rand() / (RAND_MAX + 1.0) * (max - min) + min;
@@ -51,7 +52,7 @@ int main(int argc, char** argv)
   }
 
   double time = wtime();
-  simpleMatrixProizv(matrixOne, matrixTwo, matrixRezult, size);
+ // simpleMatrixProizv(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
   printf("simpleMatrixProizv\t%.6lf\n" , time);
 
@@ -62,7 +63,7 @@ int main(int argc, char** argv)
   }
 
   time = wtime();
-  simpleMatrixProizvAsm(matrixOne, matrixTwo, matrixRezult, size);
+ // simpleMatrixProizvAsm(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
   printf("simpleMatrixProizvAsm\t%.6lf\n" , time);
 
@@ -73,7 +74,7 @@ int main(int argc, char** argv)
   }
 
   time = wtime();
-  simpleMatrixProizvCache(matrixOne, matrixTwo, matrixRezult, size);
+ // simpleMatrixProizvCache(matrixOne, matrixTwo, matrixRezult, size);
   time = wtime() - time;
 
   printf("simpleMatrixProizvCache\t%.6lf\n" , time);
@@ -126,6 +127,8 @@ int main(int argc, char** argv)
       rezult[i * size + j] = 0;
     }
   }
+
+  threadnum = argc > 1 ? atoi(argv[1]) : 4;
 
   time = wtime();
   simpleMatrixProizvCacheOblivious(rezult, one, two, realSize, realSize);
