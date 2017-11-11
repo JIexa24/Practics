@@ -70,11 +70,11 @@ void simpleMatrixProizvCache(int32_t** first, int32_t** second,
 }
 /*---------------------------------------------------------------------------*/
 typedef struct threaddata {
-  int *C,
-  int *A,
-  int *B,
+  int* C,
+  int* A,
+  int* B,
   int size,
-  int rowsize
+  int rowsize,
 } dat;
 void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
                                       int size, int rowsize)
