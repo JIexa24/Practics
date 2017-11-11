@@ -14,7 +14,6 @@ typedef struct threaddata {
   int32_t *B;
   int size;
   int rowsize;
-  int* thr;
 } dat;
 
 double wtime();
