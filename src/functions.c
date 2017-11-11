@@ -89,7 +89,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
     const int ind21 = (size / 2) * rowsize;
     const int ind22 = (size / 2) * (rowsize + 1);
     pthread_t tid[7];
-    int args[5][7] = {{C + ind11, A + ind11, B + ind11, size / 2, rowsize},//
+    int args[7][5] = {{C + ind11, A + ind11, B + ind11, size / 2, rowsize},//
 {C + ind11, A + ind12, B + ind21, size / 2, rowsize},//
 {C + ind12, A + ind11, B + ind12, size / 2, rowsize},//
 {C + ind12, A + ind12, B + ind22, size / 2, rowsize},//
@@ -98,14 +98,14 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
 {C + ind22, A + ind21, B + ind12, size / 2, rowsize}}; 
     // C11 += A11 * B11
     if (threadnum < threadnumst){
-    pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp,&args[0]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind11, A + ind11, B + ind11, size / 2, rowsize);
     }
     // C11 += A12 * B21
     if (threadnum < threadnumst){
-    pthread_create(&tid[1],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[1],NULL,simpleMatrixProizvCacheObliviousp,&args[1]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind11, A + ind12, B + ind21, size / 2, rowsize);
@@ -113,14 +113,14 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
  
     // C12 += A11 * B12
     if (threadnum < threadnumst){
-    pthread_create(&tid[2],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[2],NULL,simpleMatrixProizvCacheObliviousp,&args[2]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind12, A + ind11, B + ind12, size / 2, rowsize);
     }
     // C12 += A12 * B22
     if (threadnum < threadnumst){
-    pthread_create(&tid[3],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[3],NULL,simpleMatrixProizvCacheObliviousp,&args[3]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind12, A + ind12, B + ind22, size / 2, rowsize);
@@ -128,7 +128,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
  
     // C21 += A21 * B11
     if (threadnum < threadnumst){
-    pthread_create(&tid[4],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[4],NULL,simpleMatrixProizvCacheObliviousp,&args[4]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind21, A + ind21, B + ind11, size / 2, rowsize);
@@ -136,7 +136,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
 
     // C21 += A22 * B21
     if (threadnum < threadnumst){
-    pthread_create(&tid[5],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[5],NULL,simpleMatrixProizvCacheObliviousp,&args[5]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind21, A + ind22, B + ind21, size / 2, rowsize);
@@ -144,7 +144,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
  
     // C22 += A21 * B12
     if (threadnum < threadnumst){
-    pthread_create(&tid[6],NULL,simpleMatrixProizvCacheObliviousp,args);
+    pthread_create(&tid[6],NULL,simpleMatrixProizvCacheObliviousp,&args[6]);
     threadnum++;
     } else {
     simpleMatrixProizvCacheObliviousp(C + ind22, A + ind21, B + ind12, size / 2, rowsize);
