@@ -176,7 +176,7 @@ oizvCacheObliviousp,args[6]);
 void simpleMatrixProizvCacheObliviousp(void * arg)
 {
   dat *p = (dat*)(arg);
-  if (*size == 2)
+  if (p->size == 2)
   {
     const int ind11 = 0;
     const int ind12 = 1;
