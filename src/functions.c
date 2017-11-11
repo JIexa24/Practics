@@ -76,8 +76,8 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
   {
     const int ind11 = 0;
     const int ind12 = 1;
-    const int ind21 = rowsize;
-    const int ind22 = rowsize + 1;
+    const int ind21 = *rowsize;
+    const int ind22 = *rowsize + 1;
 
     C[ind11] += A[ind11] * B[ind11] + A[ind12] * B[ind21];
     C[ind12] += A[ind11] * B[ind12] + A[ind12] * B[ind22];
@@ -164,8 +164,8 @@ void simpleMatrixProizvCacheObliviousp(int32_t *C,  int32_t *A,  int32_t *B,
   {
     const int ind11 = 0;
     const int ind12 = 1;
-    const int ind21 = rowsize;
-    const int ind22 = rowsize + 1;
+    const int ind21 = *rowsize;
+    const int ind22 = *rowsize + 1;
 
     C[ind11] += A[ind11] * B[ind11] + A[ind12] * B[ind21];
     C[ind12] += A[ind11] * B[ind12] + A[ind12] * B[ind22];
@@ -175,8 +175,8 @@ void simpleMatrixProizvCacheObliviousp(int32_t *C,  int32_t *A,  int32_t *B,
     int tsize = *size /2 ;
     const int ind11 = 0;
     const int ind12 = tsize;
-    const int ind21 = (tsize) * rowsize;
-    const int ind22 = (tsize) * (rowsize + 1);
+    const int ind21 = (tsize) * *rowsize;
+    const int ind22 = (tsize) * (*rowsize + 1);
  
     // C11 += A11 * B11
     simpleMatrixProizvCacheObliviousp(C + ind11, A + ind11, B + ind11, &tsize, &rowsize);
