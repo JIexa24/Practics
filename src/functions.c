@@ -1,7 +1,7 @@
 #include "../include/functions.h"
 #include <pthread.h>
 extern int threadnum;
-extern int threadnumst;
+extern int threadn;
 
 pthread_mutex_t incmutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t decmutex = PTHREAD_MUTEX_INITIALIZER;
@@ -119,7 +119,7 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
   dat * p = (dat *)(ptr);
 //  printf("%d\n", p->size); 
   pthread_mutex_lock(&incmutex);
-  p->thr[0]++;
+ threadn++;
   pthread_mutex_unlock(&incmutex);
   if (p->size == 2)
   {
@@ -151,10 +151,10 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 };
 
     // C11 += A11 * B11
-//  if (p->thr[0] <= threadnum && p->thr[0] >= 0){
+  if (threadn <= threadnum && threadn >= 0){
     pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp, &argum[0]);
 //    printf("thread %d %d!\n",p->thr[0],threadnum);
-//} else
+} else
     simpleMatrixProizvCacheObliviousp(&argum[0]);
     // C11 += A12 * B21
     simpleMatrixProizvCacheObliviousp(&argum[1]);
@@ -175,7 +175,12 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
     simpleMatrixProizvCacheObliviousp(&argum[7]);
  // }
 //  p->thr[0]--;
-   pthread_join(tid[0],NULL);
+  }
+  if (threadn > 0) {
+  pthread_mutex_lock(&decmutex);
+ threadn--;
+  pthread_mutex_unlock(&decmutex);
+    pthread_exit(0);
   }
   return NULL;
 }
