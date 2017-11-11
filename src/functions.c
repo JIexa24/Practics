@@ -140,14 +140,14 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
     const int ind22 = tsize * (p->rowsize + 1);
     pthread_t tid[8];
     dat argum[8] = {
-{p->C + ind11, p->A + ind11, p->B + ind11, tsize, p->rowsize, p->thr},//
-{p->C + ind11, p->A + ind12, p->B + ind21, tsize, p->rowsize, p->thr},//
-{p->C + ind12, p->A + ind11, p->B + ind12, tsize, p->rowsize, p->thr},//
-{p->C + ind12, p->A + ind12, p->B + ind22, tsize, p->rowsize, p->thr},//
-{p->C + ind21, p->A + ind21, p->B + ind11, tsize, p->rowsize, p->thr},//
-{p->C + ind21, p->A + ind22, p->B + ind21, tsize, p->rowsize, p->thr},
-{p->C + ind22, p->A + ind21, p->B + ind12, tsize, p->rowsize, p->thr},
-{p->C + ind22, p->A + ind22, p->B + ind22, tsize, p->rowsize, p->thr}
+{p->C + ind11, p->A + ind11, p->B + ind11, tsize, p->rowsize},//
+{p->C + ind11, p->A + ind12, p->B + ind21, tsize, p->rowsize},//
+{p->C + ind12, p->A + ind11, p->B + ind12, tsize, p->rowsize},//
+{p->C + ind12, p->A + ind12, p->B + ind22, tsize, p->rowsize},//
+{p->C + ind21, p->A + ind21, p->B + ind11, tsize, p->rowsize},//
+{p->C + ind21, p->A + ind22, p->B + ind21, tsize, p->rowsize},
+{p->C + ind22, p->A + ind21, p->B + ind12, tsize, p->rowsize},
+{p->C + ind22, p->A + ind22, p->B + ind22, tsize, p->rowsize}
 };
 
     // C11 += A11 * B11
