@@ -84,7 +84,7 @@ void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
     C[ind21] += A[ind21] * B[ind11] + A[ind22] * B[ind21];
     C[ind22] += A[ind21] * B[ind12] + A[ind22] * B[ind22];
   } else {
-    tsize = size /2 ;
+    tsize = *size /2 ;
     const int ind11 = 0;
     const int ind12 = tsize;
     const int ind21 = (tsize) * rowsize;
@@ -172,7 +172,7 @@ void simpleMatrixProizvCacheObliviousp(int32_t *C,  int32_t *A,  int32_t *B,
     C[ind21] += A[ind21] * B[ind11] + A[ind22] * B[ind21];
     C[ind22] += A[ind21] * B[ind12] + A[ind22] * B[ind22];
   } else {
-    tsize = size /2 ;
+    tsize = *size /2 ;
     const int ind11 = 0;
     const int ind12 = tsize;
     const int ind21 = (tsize) * rowsize;
