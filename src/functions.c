@@ -186,24 +186,24 @@ void simpleMatrixProizvCacheObliviousp(int32_t *C,  int32_t *A,  int32_t *B,
     const int ind22 = (tsize) * (*rowsize + 1);
  
     // C11 += A11 * B11
-    simpleMatrixProizvCacheObliviousp(C + ind11, A + ind11, B + ind11, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind11, A + ind11, B + ind11, &tsize, rowsize);
     // C11 += A12 * B21
-    simpleMatrixProizvCacheObliviousp(C + ind11, A + ind12, B + ind21, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind11, A + ind12, B + ind21, &tsize, rowsize);
  
     // C12 += A11 * B12
-    simpleMatrixProizvCacheObliviousp(C + ind12, A + ind11, B + ind12, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind12, A + ind11, B + ind12, &tsize, rowsize);
     // C12 += A12 * B22
-    simpleMatrixProizvCacheObliviousp(C + ind12, A + ind12, B + ind22, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind12, A + ind12, B + ind22, &tsize, rowsize);
  
     // C21 += A21 * B11
-    simpleMatrixProizvCacheObliviousp(C + ind21, A + ind21, B + ind11, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind21, A + ind21, B + ind11, &tsize, rowsize);
     // C21 += A22 * B21
-    simpleMatrixProizvCacheObliviousp(C + ind21, A + ind22, B + ind21, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind21, A + ind22, B + ind21, &tsize, rowsize);
  
     // C22 += A21 * B12
-    simpleMatrixProizvCacheObliviousp(C + ind22, A + ind21, B + ind12, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind22, A + ind21, B + ind12, &tsize, rowsize);
     // C22 += A22 * B22
-    simpleMatrixProizvCacheObliviousp(C + ind22, A + ind22, B + ind22, tsize, rowsize);
+    simpleMatrixProizvCacheObliviousp(C + ind22, A + ind22, B + ind22, &tsize, rowsize);
   }
 }
 
