@@ -18,7 +18,6 @@ void simpleMatrixProizvCache(int32_t** first, int32_t** second,
                              int32_t** rezult, int size);
 void simpleMatrixProizvCacheOblivious(int32_t *C,  int32_t *A,  int32_t *B,
                                       int size, int rowsize);
-void simpleMatrixProizvCacheObliviousp(int32_t *C,  int32_t *A,  int32_t *B,
-                                      int* size, int* rowsize);
+void simpleMatrixProizvCacheObliviousp(void * arg);
 
 #endif
