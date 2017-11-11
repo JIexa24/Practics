@@ -128,7 +128,7 @@ int main(int argc, char** argv)
     }
   }
 
-  threadnum = argc > 1 ? atoi(argv[1]) : 4;
+  threadnum = argc > 2 ? atoi(argv[2]) : 4;
 
   time = wtime();
   simpleMatrixProizvCacheOblivious(rezult, one, two, realSize, realSize);
