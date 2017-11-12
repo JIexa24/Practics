@@ -119,7 +119,7 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 {
   dat * p = (dat *)(ptr);
 //  printf("%d\n", p->size); 
-  level++;
+  level=levelt;
   if (p->size == 2)
   {
     const int ind11 = 0;
@@ -174,7 +174,9 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
     // C22 += A21 * B12
     simpleMatrixProizvCacheObliviousp(&argum[6]);
     
+    pthread_mutex_lock(&incmutex);
     levelt++;
+    pthread_mutex_unlock(&incmutex);
     
     // C22 += A22 * B22
     simpleMatrixProizvCacheObliviousp(&argum[7]);
