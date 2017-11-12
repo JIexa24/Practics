@@ -151,10 +151,10 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 };
 
     // C11 += A11 * B11
-  if (threadn <= threadnum && threadn >= 0){
+    if (threadn < threadnum && threadn >= 0){
     pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp, &argum[0]);
-//    printf("thread %d %d!\n",p->thr[0],threadnum);
-} else
+      printf("thread %d %d!\n",p->thr[0],threadnum);
+    } else
     simpleMatrixProizvCacheObliviousp(&argum[0]);
     // C11 += A12 * B21
     simpleMatrixProizvCacheObliviousp(&argum[1]);
@@ -178,7 +178,7 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
   }
   if (threadn > 0) {
   pthread_mutex_lock(&decmutex);
- threadn--;
+  threadn--;
   pthread_mutex_unlock(&decmutex);
     pthread_exit(0);
   }
