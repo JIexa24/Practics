@@ -2,7 +2,8 @@
 #include <pthread.h>
 extern int threadnum;
 extern int threadn;
-
+int level = 1;
+int levelt = 1;
 pthread_mutex_t incmutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_mutex_t decmutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -118,9 +119,7 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 {
   dat * p = (dat *)(ptr);
 //  printf("%d\n", p->size); 
-  pthread_mutex_lock(&incmutex);
- threadn++;
-  pthread_mutex_unlock(&incmutex);
+  level++;
   if (p->size == 2)
   {
     const int ind11 = 0;
@@ -151,8 +150,11 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 };
 
     // C11 += A11 * B11
-    if (threadn < threadnum && threadn >= 0){
+    if (threadn < threadnum && threadn >= 0 && level == levelt){
     pthread_create(&tid[0],NULL,simpleMatrixProizvCacheObliviousp, &argum[0]);
+    pthread_mutex_lock(&incmutex);
+    threadn++;
+    pthread_mutex_unlock(&incmutex);
       printf("thread %d %d!\n",threadn,threadnum);
     } else
     simpleMatrixProizvCacheObliviousp(&argum[0]);
@@ -171,6 +173,9 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
 
     // C22 += A21 * B12
     simpleMatrixProizvCacheObliviousp(&argum[6]);
+    
+    levelt++;
+    
     // C22 += A22 * B22
     simpleMatrixProizvCacheObliviousp(&argum[7]);
  // }
