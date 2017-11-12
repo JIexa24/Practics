@@ -187,7 +187,7 @@ void * simpleMatrixProizvCacheObliviousp(void* ptr)
   pthread_mutex_lock(&decmutex);
   threadn--;
   pthread_mutex_unlock(&decmutex);
-    pthread_exit(0);
+    //pthread_exit(0);
   }
   return NULL;
 }
