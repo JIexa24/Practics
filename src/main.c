@@ -128,7 +128,7 @@ int main(int argc, char** argv)
     }
   }
   threadnum = 0;
-  threadn = 0;
+  threadn = -1;
   threadnum = argc > 2 ? atoi(argv[2]) : 4;
   dat datat = {rezult,one, two,realSize,realSize};
   time = wtime();
