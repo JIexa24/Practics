@@ -103,20 +103,20 @@ int main(int argc, char** argv)
 
   for (i = 0; i < realSize; i++) {
     for (j = 0; j < realSize; j++) {
-      if ((i >= size) | (j >= size)) {
-        one[i * size + j] = 0;
+      if (i < size && j < size) {
+         one[i * realSize + j] = getrand(min,max);
       } else {
-        one[i * size + j] = getrand(min,max);
+         one[i * realSize + j] = 0;
       }
     }
   }
   
   for (i = 0; i < realSize; i++) {
     for (j = 0; j < realSize; j++) {
-      if ((i >= size) | (j >= size)) {
-        two[i * size + j] = 0;
+      if (i < size && j < size) {
+         two[i * realSize + j] = getrand(min,max);
       } else {
-        two[i * size + j] = getrand(min,max);
+         two[i * realSize + j] = 0;
       }
     }
   }
